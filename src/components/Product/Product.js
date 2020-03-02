@@ -247,7 +247,7 @@
 //                                                         className="custom-select" 
 //                                                         id="inputGroupSelect01" 
 //                                                         value={this.state.category}>
-//                                                             <option selected value={0} disabled>Choose...</option>
+//                                                             <option selected value={0} disabled>Choose...</ooptin>
 //                                                             <option value={1}>Food</option>
 //                                                             <option value={2}>Drink</option>
 //                                                         </select>

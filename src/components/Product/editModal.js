@@ -2,9 +2,9 @@ import React, {Component} from 'react'
 import { Button, Form } from 'react-bootstrap'
 
 import { connect } from 'react-redux'
-import {addProduct} from '../redux/actions/product'
+import {editProduct} from '../redux/actions/product'
 
-class NewModals extends Component{
+class EditModals extends Component{
 
         state={
             name: '',
@@ -15,7 +15,7 @@ class NewModals extends Component{
         }
         
         onChangeImageHandler = (e)=>{
-            console.log(e.target.files[0])
+            // console.log(e.target.files[0])
             this.setState({
                 image:e.target.files[0]
             })
@@ -30,8 +30,10 @@ class NewModals extends Component{
         
         
         onSubmitHandler = (e)=>{
+            
             e.preventDefault()
-
+            
+            const propsId = this.props.idProduct
             let data = new FormData()
             data.append("name", this.state.name)
             data.append("price", this.state.price)
@@ -39,20 +41,20 @@ class NewModals extends Component{
             data.append("stock", this.state.stock)
             data.append("image", this.state.image)
 
-            console.log(this.state)
+            console.log(propsId)
 
-            this.props.dispatch(addProduct(data))
+            this.props.dispatch(editProduct(data, propsId ))
 
         }
 
     render(){
         return(
             <div>
-                <div className="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title" id="exampleModalLabel">Add Product</h5>
+                                <h5 className="modal-title" id="editModalLabel">Edit Product</h5>
                                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -61,7 +63,8 @@ class NewModals extends Component{
                             <Form onSubmit={this.onSubmitHandler}>
                                 <Form.Group>
                                     <Form.Label>Name</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter name" name="name" onChange={this.onChangeHandler} />
+                                    <Form.Control type="text" placeholder="Enter name" name="name" onChange={this.onChangeHandler} >
+                                    </Form.Control>
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>Category</Form.Label>
@@ -96,4 +99,4 @@ class NewModals extends Component{
     }
 }
 
-export default connect()(NewModals)
+export default connect()(EditModals)

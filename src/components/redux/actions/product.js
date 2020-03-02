@@ -15,8 +15,29 @@ export const addProduct = (data) => {
         type: 'POST_PRODUCT',
         payload: axios({
             method: 'POST',
-            url: "http://localhost:4500/product",
-            data:data
+            data:data,
+            url: "http://localhost:4500/product"
+        })
+    }
+}
+
+export const editProduct = (data, propsId) => {
+    return{
+        type: 'UPDATE_PRODUCT',
+        payload: axios({
+            method: 'PATCH',
+            data:data,
+            url: `http://localhost:4500/product/${propsId}`
+        })
+    }
+}
+
+export const deleteProduct = (propsId) => {
+    return{
+        type: 'DELETE_PRODUCT',
+        payload: axios({
+            method: 'DELETE',
+            url: `http://localhost:4500/product/${propsId}`
         })
     }
 }
