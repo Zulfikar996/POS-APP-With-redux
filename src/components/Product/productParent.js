@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getProducts } from '../redux/actions/product'
+import { getCategory } from '../redux/actions/category'
 import NewModals from './addModal'
 import EditModals from './editModal'
 import NewNavbar from '../Layout/Navbar'
@@ -15,6 +16,10 @@ class ProductParent extends Component {
 
     getProducts(){
         this.props.dispatch(getProducts())
+    }
+
+    getCategory(){
+        this.props.dispatch(getCategory())
     }
 
     componentDidMount(){
@@ -68,9 +73,9 @@ class ProductParent extends Component {
                         <NewModals />
                     <div className="cartbar col-md-3 bg-light"  style={{height:'39.5rem', float:'right', overflowY:'hidden'}}>
                         <div style={{backgroundColor:'#d9d9d9', height:'4rem', marginLeft:'-14px'}}>
-                            asdfasdafasd
+                            <center ><h5 style={{lineHeight:'4rem'}}>Cart</h5></center>
                         </div>
-                        zulul
+                        <img src="https://i.pinimg.com/originals/2e/ac/fa/2eacfa305d7715bdcd86bb4956209038.png" style={{ width:'450px', marginLeft:'-60px'}}/>
                     </div>
                 </div>
         )

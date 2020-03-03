@@ -3,6 +3,8 @@ import { Button, Form } from 'react-bootstrap'
 
 import { connect } from 'react-redux'
 import {addProduct} from '../redux/actions/product'
+import { getCategory } from '../redux/actions/category'
+
 
 class NewModals extends Component{
 
@@ -14,6 +16,14 @@ class NewModals extends Component{
             image:''
         }
         
+        
+        getCategory(){
+            this.props.dispatch(getCategory())
+        }
+        
+        componentDidMount(){
+            this.getCategory()
+        }
         onChangeImageHandler = (e)=>{
             console.log(e.target.files[0])
             this.setState({
@@ -46,6 +56,7 @@ class NewModals extends Component{
         }
 
     render(){
+        const { categorys } = this.props;
         return(
             <div>
                 <div className="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -58,7 +69,7 @@ class NewModals extends Component{
                                 </button>
                             </div>
                             <div className="modal-body">
-                            <Form onSubmit={this.onSubmitHandler}>
+                            <Form >
                                 <Form.Group>
                                     <Form.Label>Name</Form.Label>
                                     <Form.Control type="text" placeholder="Enter name" name="name" onChange={this.onChangeHandler} />
@@ -67,8 +78,13 @@ class NewModals extends Component{
                                     <Form.Label>Category</Form.Label>
                                     <Form.Control name="category" onChange={this.onChangeHandler} as="select">
                                         <option selected value={0} disabled>Choose...</option>
-                                        <option value={1}>Food</option>
-                                        <option value={2}>Drink</option>
+                                        { categorys.map((category, index) => 
+                                        <option key={index} value={category.id}>
+                                            {category.name}
+                                        </option>
+                                    )}
+                                        {/* <option value={1}>Food</option>
+                                        <option value={2}>Drink</option> */}
                                     </Form.Control>
                                 </Form.Group>
                                 <Form.Group>
@@ -83,7 +99,7 @@ class NewModals extends Component{
                                     <Form.Label>Image</Form.Label>
                                     <Form.Control type="file" placeholder="Enter image file" name="image" onChange={this.onChangeImageHandler} />
                                 </Form.Group>
-                                <Button variant="primary" type="submit">
+                                <Button onClick={this.onSubmitHandler} data-dismiss="modal" variant="primary" type="submit">
                                     Submit
                                 </Button>
                             </Form>
@@ -96,4 +112,10 @@ class NewModals extends Component{
     }
 }
 
-export default connect()(NewModals)
+const mapStateToProps = (state) =>{
+    return{
+        categorys: state.categorys.categorys
+    }
+}
+
+export default connect(mapStateToProps)(NewModals)

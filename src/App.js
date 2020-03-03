@@ -7,8 +7,9 @@ import store from './components/redux/store'
 
 import Home from './components/Home/Home'
 import Login from './components/auth/Login'
-import productParent from './components/Product/productParent'
+import ProductParent from './components/Product/productParent'
 // import NewNavbar from './components/Layout/Navbar'
+import CategoryParent from './components/Category/categoryParent'
 
 function App() {
   return (
@@ -17,7 +18,8 @@ function App() {
           {/* <NewNavbar /> */}
           <Route exact path="/" component={Home} />
           <Route path="/login" component={Login} />
-          <Route path="/newHome" component={productParent} />
+          <Route path="/newHome" component={ProductParent} />
+          <Route path="/Category" component={CategoryParent} />
       </Router>
     </Provider>
   );

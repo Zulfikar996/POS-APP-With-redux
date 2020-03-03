@@ -60,7 +60,7 @@ class EditModals extends Component{
                                 </button>
                             </div>
                             <div className="modal-body">
-                            <Form onSubmit={this.onSubmitHandler}>
+                            <Form >
                                 <Form.Group>
                                     <Form.Label>Name</Form.Label>
                                     <Form.Control type="text" placeholder="Enter name" name="name" onChange={this.onChangeHandler} >
@@ -86,7 +86,7 @@ class EditModals extends Component{
                                     <Form.Label>Image</Form.Label>
                                     <Form.Control type="file" placeholder="Enter image file" name="image" onChange={this.onChangeImageHandler} />
                                 </Form.Group>
-                                <Button variant="primary" type="submit">
+                                <Button onSubmit={this.onSubmitHandler} data-dismiss="modal" variant="primary" type="submit">
                                     Submit
                                 </Button>
                             </Form>
