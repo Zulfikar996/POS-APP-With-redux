@@ -21,6 +21,7 @@ export const addCategory = (data) => {
     }
 }
 
+
 export const deleteCategory = (propsId) => {
     return{
         type: 'DELETE_CATEGORY',
