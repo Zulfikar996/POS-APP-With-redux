@@ -32,17 +32,16 @@ const product = (state = initialState, action) => {
                  ...state,
                  products: newDataProduct
              }
-        
-
-             case 'UPDATE_PRODUCT_PENDING':
+    
+             case 'PATCH_PRODUCT_PENDING':
                 return{
                     ...state
                 }
-             case 'UPDATE_PRODUCT_REJECTED':
+             case 'PATCH_PRODUCT_REJECTED':
                  return{
                      ...state
                  }
-             case 'UPDATE_PRODUCT_FULFILLED':
+             case 'PATCH_PRODUCT_FULFILLED':
                  console.log(action.payload)
                 const newEditProduct = state.products.map(product => {
                     if(product.id === action.payload.data.result.id){
@@ -71,6 +70,21 @@ const product = (state = initialState, action) => {
                          ...state,
                          products: newDeleteProduct
                      }
+
+                     case 'FILTER_PRODUCT_PENDING':
+                         console.log(action.payload)
+                        return {
+                            ...state
+                        }
+                    case 'FILTER_PRODUCT_REJECTED':
+                        return {
+                            ...state
+                        }
+                    case 'FILTER_PRODUCT_FULFILLED':
+                        return {
+                            ...state,
+                            products: action.payload.data.result
+                        }
         default:
             return state;
         }

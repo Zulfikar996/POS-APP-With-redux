@@ -3,7 +3,6 @@ import { Button, Form } from 'react-bootstrap'
 
 import { connect } from 'react-redux'
 import {addProduct} from '../redux/actions/product'
-import { getCategory } from '../redux/actions/category'
 
 
 class NewModals extends Component{
@@ -16,14 +15,6 @@ class NewModals extends Component{
             image:''
         }
         
-        
-        getCategory(){
-            this.props.dispatch(getCategory())
-        }
-        
-        componentDidMount(){
-            this.getCategory()
-        }
         onChangeImageHandler = (e)=>{
             console.log(e.target.files[0])
             this.setState({
@@ -56,7 +47,7 @@ class NewModals extends Component{
         }
 
     render(){
-        const { categorys } = this.props;
+        const {categorys} = this.props
         return(
             <div>
                 <div className="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -83,8 +74,6 @@ class NewModals extends Component{
                                             {category.name}
                                         </option>
                                     )}
-                                        {/* <option value={1}>Food</option>
-                                        <option value={2}>Drink</option> */}
                                     </Form.Control>
                                 </Form.Group>
                                 <Form.Group>
@@ -112,10 +101,5 @@ class NewModals extends Component{
     }
 }
 
-const mapStateToProps = (state) =>{
-    return{
-        categorys: state.categorys.categorys
-    }
-}
 
-export default connect(mapStateToProps)(NewModals)
+export default connect()(NewModals)

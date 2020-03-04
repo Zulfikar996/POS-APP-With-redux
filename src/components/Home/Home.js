@@ -23,12 +23,8 @@ class Home extends Component{
                 <p>Welcome, {localStorage.getItem('name')} <Link to="#" onClick={this.onLogout.bind(this)}>Logout</Link></p>
                 <div className='row' >
                     <div className='content col-md-9' style={{backgroundColor:'#d9d9d9'}} >
-                        {/* <Product/> */}
                     </div>
                    </div>
-
-
-              {/* <Modals /> */}
             </div>
         )
     }

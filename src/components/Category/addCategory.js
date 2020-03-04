@@ -21,10 +21,7 @@ class AddCategoryModals extends Component{
         
         onSubmitHandler = (e)=>{
             e.preventDefault()
-
-            // let data = new FormData()
-            // data.append("name", this.state.name)
-
+            
             const data={
                 name: this.state.name
             }

@@ -19,6 +19,7 @@ const category = (state = initialState, action) => {
             }
         
         case 'POST_CATEGORY_PENDING':
+            console.log(action.payload)
             return{
                 ...state
             }
@@ -33,28 +34,6 @@ const category = (state = initialState, action) => {
                  ...state,
                  categorys: newDataCategory
              }
-        
-
-        //      case 'UPDATE_PRODUCT_PENDING':
-        //         return{
-        //             ...state
-        //         }
-        //      case 'UPDATE_PRODUCT_REJECTED':
-        //          return{
-        //              ...state
-        //          }
-        //      case 'UPDATE_PRODUCT_FULFILLED':
-        //          console.log(action.payload)
-        //         const newEditProduct = state.products.map(product => {
-        //             if(product.id === action.payload.data.result.id){
-        //                 return action.payload.data.result;
-        //             }
-        //              return product;
-        //         })
-        //          return{
-        //              ...state,
-        //              products: newEditProduct
-        //          }
 
                  case 'DELETE_CATEGORY_PENDING':
                     return{

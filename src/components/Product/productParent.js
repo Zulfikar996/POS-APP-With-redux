@@ -6,12 +6,18 @@ import NewModals from './addModal'
 import EditModals from './editModal'
 import NewNavbar from '../Layout/Navbar'
 import DeleteModal from './deleteModal'
+import { addToCart } from '../redux/actions/cart'
 
 
 class ProductParent extends Component {
 
     state={
-        idProduct:''
+        idProduct:'',
+    }
+
+    onAddToCart=(data)=>{
+        // console.log(data)
+        this.props.dispatch(addToCart(data))
     }
 
     getProducts(){
@@ -24,6 +30,7 @@ class ProductParent extends Component {
 
     componentDidMount(){
         this.getProducts()
+        this.getCategory()
     }
 
     onClickHandler = (e)=>{
@@ -35,17 +42,17 @@ class ProductParent extends Component {
     }
 
     render(){
-        const {products} = this.props
+        const {products, categorys} = this.props
         return(
                 <div className="row">
                     <div className="col-md-9" style={{height:'100vh', overflowY:'scroll', overflowX:'hidden'}} >
-                        <NewNavbar />
-                        <EditModals idProduct={this.state.idProduct} />
+                        <NewNavbar categorys={categorys} />
+                        <EditModals idProduct={this.state.idProduct} categorys={categorys} />
                         <DeleteModal idProduct={this.state.idProduct} />
                         <div className="row" style={{paddingLeft:'50px'}}>
                         {products.map((product) =>
                             <div className="col-sm-4" key={product.id} style={{backgroundColor:'#d9d9d9', padding:'25px'}}>
-                                <div className="card" style={{backgroundColor:'transparent', border:'0px solid black',margin:'-25px', width:'20rem'}} >
+                                <div className="card" style={{backgroundColor:'transparent', border:'0px solid black',margin:'-25px', width:'20rem'}} onClick={()=>this.onAddToCart(product)} >
                                     <div className="card-body" style={{padding:'10px'}}>
                                         <img src={product.image} className="card-img" height="180px" alt=""/>
                                         <div className='row'>
@@ -70,7 +77,7 @@ class ProductParent extends Component {
                         )}
                         </div>
                     </div>
-                        <NewModals />
+                        <NewModals categorys={categorys} />
                     <div className="cartbar col-md-3 bg-light"  style={{height:'39.5rem', float:'right', overflowY:'hidden'}}>
                         <div style={{backgroundColor:'#d9d9d9', height:'4rem', marginLeft:'-14px'}}>
                             <center ><h5 style={{lineHeight:'4rem'}}>Cart</h5></center>
@@ -84,7 +91,8 @@ class ProductParent extends Component {
 
 const mapStateToProps = (state) =>{
     return{
-        products: state.products.products
+        products: state.products.products,
+        categorys: state.categorys.categorys
     }
 }
 

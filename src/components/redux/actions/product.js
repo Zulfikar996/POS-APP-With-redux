@@ -23,7 +23,7 @@ export const addProduct = (data) => {
 
 export const editProduct = (data, propsId) => {
     return{
-        type: 'UPDATE_PRODUCT',
+        type: 'PATCH_PRODUCT',
         payload: axios({
             method: 'PATCH',
             data:data,
@@ -38,6 +38,16 @@ export const deleteProduct = (propsId) => {
         payload: axios({
             method: 'DELETE',
             url: `http://localhost:4500/product/${propsId}`
+        })
+    }
+}
+
+export const filterProduct = (category, name) => {
+    return{
+        type: 'FILTER_PRODUCT',
+        payload: axios({
+            method: 'GET',
+            url: `http://localhost:4500/product?name=${name}&category=${category}`
         })
     }
 }

@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { Button, Form } from 'react-bootstrap'
 
 import { connect } from 'react-redux'
-import {editProduct} from '../redux/actions/product'
+import {editProduct, addProduct} from '../redux/actions/product'
 
 class EditModals extends Component{
 
@@ -13,6 +13,8 @@ class EditModals extends Component{
             stock:'-',
             image:''
         }
+
+
         
         onChangeImageHandler = (e)=>{
             // console.log(e.target.files[0])
@@ -30,7 +32,7 @@ class EditModals extends Component{
         
         
         onSubmitHandler = (e)=>{
-            
+            console.log("masuk sinilkasjdklas")
             e.preventDefault()
             
             const propsId = this.props.idProduct
@@ -40,14 +42,17 @@ class EditModals extends Component{
             data.append("category", this.state.category)
             data.append("stock", this.state.stock)
             data.append("image", this.state.image)
+            console.log(addProduct)
 
-            console.log(propsId)
+            this.props.dispatch(editProduct(data, propsId))
+        }
 
-            this.props.dispatch(editProduct(data, propsId ))
-
+        testSubmit = (e) => {
+            console.log("button baru")
         }
 
     render(){
+        const {categorys} = this.props
         return(
             <div>
                 <div className="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -60,7 +65,7 @@ class EditModals extends Component{
                                 </button>
                             </div>
                             <div className="modal-body">
-                            <Form >
+                                <Form >
                                 <Form.Group>
                                     <Form.Label>Name</Form.Label>
                                     <Form.Control type="text" placeholder="Enter name" name="name" onChange={this.onChangeHandler} >
@@ -70,8 +75,11 @@ class EditModals extends Component{
                                     <Form.Label>Category</Form.Label>
                                     <Form.Control name="category" onChange={this.onChangeHandler} as="select">
                                         <option selected value={0} disabled>Choose...</option>
-                                        <option value={1}>Food</option>
-                                        <option value={2}>Drink</option>
+                                        { categorys.map((category, index) => 
+                                        <option key={index} value={category.id}>
+                                            {category.name}
+                                        </option>
+                                    )}
                                     </Form.Control>
                                 </Form.Group>
                                 <Form.Group>
@@ -86,10 +94,10 @@ class EditModals extends Component{
                                     <Form.Label>Image</Form.Label>
                                     <Form.Control type="file" placeholder="Enter image file" name="image" onChange={this.onChangeImageHandler} />
                                 </Form.Group>
-                                <Button onSubmit={this.onSubmitHandler} data-dismiss="modal" variant="primary" type="submit">
+                                <Button onClick={this.onSubmitHandler} data-dismiss="modal" variant="primary" type="submit">
                                     Submit
                                 </Button>
-                            </Form>
+                                </Form>
                             </div>
                         </div>
                     </div>
@@ -98,5 +106,6 @@ class EditModals extends Component{
         )
     }
 }
+
 
 export default connect()(EditModals)
