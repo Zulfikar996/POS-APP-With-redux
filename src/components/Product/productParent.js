@@ -7,13 +7,15 @@ import NewModals from './addModal'
 import EditModals from './editModal'
 import NewNavbar from '../Layout/Navbar'
 import DeleteModal from './deleteModal'
-import { addToCart, addQuantity,reduceQuantity } from '../redux/actions/cart'
+import { addToCart, addQuantity, reduceQuantity, deleteCart } from '../redux/actions/cart'
 
 
 class ProductParent extends Component {
 
     state={
         idProduct:'',
+        page: 1,
+        limit:6,
     }
 
     onAddToCart=(data)=>{
@@ -29,15 +31,27 @@ class ProductParent extends Component {
         this.props.dispatch(reduceQuantity(id))
     }
 
-    getProducts(){
-        this.props.dispatch(getProducts())
+    deleteCart = (data) => {
+        this.props.dispatch(deleteCart(data))
     }
+
+    getProducts = () =>{
+        this.props.dispatch(getProducts(this.state.page, this.state.limit))
+    }
+
+    // getPagination = (event) =>{
+    //     console.log(event.target.value)
+    //     this.props.dispatch(pagination(event.target.value, this.state.limit))
+    // }
 
     getCategory(){
         this.props.dispatch(getCategory())
     }
 
     componentDidMount(){
+        if(!localStorage.getItem('isAuth')){
+            this.props.history.push('/login');
+        }
         this.getProducts()
         this.getCategory()
     }
@@ -45,8 +59,24 @@ class ProductParent extends Component {
     onClickHandler = (e)=>{
         console.log(e.target.value)
         this.setState({
-            // [e.target.name]:e.target.value,
-            idProduct:e.target.value
+            [e.target.name]:e.target.value,
+            idProduct:e.target.value,
+            page:e.target.value
+        })
+    }
+
+    onLogout(){
+        localStorage.removeItem('user-id');
+        localStorage.removeItem('token');
+        localStorage.removeItem('status');
+        localStorage.removeItem('isAuth');
+        this.props.history.push('/login');
+    }
+
+    onChangeHandler = (e)=>{
+        console.log(e.target.value)
+        this.setState({
+            [e.target.name]:e.target.value
         })
     }
 
@@ -63,18 +93,20 @@ class ProductParent extends Component {
 
     render(){
         const {products, categorys, carts, total} = this.props
+        // const totalPage = Math.ceil(this.props.products.length/6)
+        // console.log(totalPage)
         return(
                 <div className="row">
                     <div className="col-md-9" style={{height:'100vh', overflowY:'scroll', overflowX:'hidden'}} >
-                        <NewNavbar categorys={categorys} />
+                        <NewNavbar categorys={categorys} onClickl={this.onLogout.bind(this)} />
                         <EditModals idProduct={this.state.idProduct} categorys={categorys} />
                         <DeleteModal idProduct={this.state.idProduct} />
                         <div className="row" style={{paddingLeft:'50px'}}>
                         {products.map((product) =>
                             <div className="col-sm-4" key={product.id} style={{backgroundColor:'#d9d9d9', padding:'25px'}}>
-                                <div className="card" style={{backgroundColor:'transparent', border:'0px solid black',margin:'-25px', width:'20rem'}} onClick={()=>this.onAddToCart(product)} >
+                                <div className="card" style={{backgroundColor:'transparent', border:'0px solid black',margin:'-25px', width:'20rem'}} >
                                     <div className="card-body" style={{padding:'10px'}}>
-                                        <img src={product.image} className="card-img" height="180px" alt=""/>
+                                        <img onClick={()=>this.onAddToCart(product)} src={product.image} className="card-img" height="180px" alt=""/>
                                         <div className='row'>
                                             <div className='col-md-7'>
                                                 <h5 className="card-title" style={{marginTop:'5px', fontSize:'16px'}}><b>{product.name}</b></h5>
@@ -95,6 +127,15 @@ class ProductParent extends Component {
                                 </div>
                             </div>
                         )}
+                        <nav aria-label="Page navigation example" style={{marginLeft:'19rem'}}>
+                            <ul className="pagination">
+                                {/* <li className="page-item"><a className="page-link" href="#">Previous</a></li>
+                                <li className="page-item"><a className="page-link" href="#" onClick={this.getPagination(1)} value={1}>1</a></li>
+                                <li className="page-item"><a className="page-link" href="#" onClick={this.getPagination(2)} value={2}>2</a></li>
+                                <li className="page-item"><a className="page-link" href="#" onClick={this.getPagination(3)} value={3}>3</a></li>
+                                <li className="page-item"><a className="page-link" href="#">Next</a></li> */}
+                            </ul>
+                        </nav>
                         </div>
                     </div>
                         <NewModals categorys={categorys} />
@@ -111,6 +152,9 @@ class ProductParent extends Component {
                                 <button type="button" class="btn btn-outline-secondary" onClick={()=>(this.reduceQuantity(cart.id))} style={{display:'inline', marginLeft:'10px'}}>-</button>
                                 <div type="text" class="form-control" style={{width:'40px', display:'inline', backgroundColor:'transparent', border:'0px solid black'}} aria-describedby="basic-addon1" > {cart.qty} </div>
                                 <button type="button" class="btn btn-outline-secondary" onClick={()=>(this.addQuantity(cart.id))}>+</button>
+                                <div>
+                                    <button type="button" class="btn btn-outline-danger">Remove</button>
+                                </div>
                               </div>
                             </li> 
                         )}
@@ -130,7 +174,7 @@ const mapStateToProps = (state) =>{
         products: state.products.products,
         categorys: state.categorys.categorys,
         carts: state.carts.carts,
-        total: state.carts.total
+        total: state.carts.total,
     }
 }
 

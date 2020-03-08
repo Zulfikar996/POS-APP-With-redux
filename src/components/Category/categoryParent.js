@@ -5,7 +5,6 @@ import { getCategory } from '../redux/actions/category'
 import { Container, Row, Button, Table } from 'react-bootstrap';
 import AddCategoryModals from './addCategory'
 import EditCategoryModals from './editCategory'
-import CategoryNavbar from '../Layout/categoryNavbar'
 import DeleteCategoryModal from './deleteCategory'
 
 
@@ -34,8 +33,6 @@ class CategoryParent extends Component {
         const { categorys } = this.props;
         return(
             <Row>
-
-            <CategoryNavbar />
             <Container>
             <AddCategoryModals />
             <EditCategoryModals idCategory={this.state.idCategory} />

@@ -1,5 +1,7 @@
 const initialState = {
-    products: []
+    products: [],
+    totalPage: 0,
+
 }
 
 const product = (state = initialState, action) => {
@@ -15,7 +17,8 @@ const product = (state = initialState, action) => {
         case 'GET_PRODUCT_FULFILLED':
             return{
                 ...state,
-                products: action.payload.data.result
+                products: action.payload.data.result,
+                totalPage: Math.ceil(action.payload.data.result/6)
             }
         
         case 'POST_PRODUCT_PENDING':
@@ -84,6 +87,11 @@ const product = (state = initialState, action) => {
                             ...state,
                             products: action.payload.data.result
                         }
+                    // case 'PAGINATION_FULFILLED':
+                    //     return {
+                    //         ...state,
+                    //         products: newPaginationProduct
+                    //     }
         default:
             return state;
         }
