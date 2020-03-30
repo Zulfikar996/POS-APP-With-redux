@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { Form } from 'react-bootstrap'
 
 import { connect } from 'react-redux'
-import {deleteCategory} from '../redux/actions/category'
+import {deleteCategory} from '../../redux/actions/category'
 
 class DeleteCategoryModal extends Component{
 

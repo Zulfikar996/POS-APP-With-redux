@@ -14,10 +14,7 @@ class EditModals extends Component{
             image:''
         }
 
-
-        
         onChangeImageHandler = (e)=>{
-            // console.log(e.target.files[0])
             this.setState({
                 image:e.target.files[0]
             })
@@ -29,7 +26,6 @@ class EditModals extends Component{
                 [e.target.name]:e.target.value
             })
         }
-        
         
         onSubmitHandler = (e)=>{
             console.log("masuk sinilkasjdklas")
@@ -45,10 +41,6 @@ class EditModals extends Component{
             console.log(addProduct)
 
             this.props.dispatch(editProduct(data, propsId))
-        }
-
-        testSubmit = (e) => {
-            console.log("button baru")
         }
 
     render(){

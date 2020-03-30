@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { Button, Form } from 'react-bootstrap'
 
 import { connect } from 'react-redux'
-import {editCategory} from '../redux/actions/category'
+import {editCategory} from '../../redux/actions/category'
 
 class EditCategoryModals extends Component{
 

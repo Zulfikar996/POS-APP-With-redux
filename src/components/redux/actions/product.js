@@ -1,27 +1,18 @@
 import axios from 'axios';
 
-export const getProducts = (page, limit, category, name) => {
+export const getProducts = (activepage, limit) => {
     const authorization = localStorage.getItem('token');
     const userId = localStorage.getItem("user-id");
+    const page = activepage || 1
     return{
         type: 'GET_PRODUCT',
         payload: axios({
             method: "GET",
-            url: `http://localhost:4500/product?limit=${limit}&page=${page}`,
+            url: `http://localhost:4500/product?page=${page}&limit=${limit  }`,
             headers: {
                 "authorization": authorization,
                 "user-id": userId
             }
-        })
-    }
-}
-
-export const getPagination = (page, limit) =>{
-    return{
-        type: 'GET_PAGINATION',
-        payload: axios({
-            method: "GET",
-            url: `http://localhost:4500/product?limit=${limit}&page=${page}`
         })
     }
 }
@@ -59,21 +50,17 @@ export const deleteProduct = (propsId) => {
 }
 
 export const filterProduct = (category, name) => {
+    const authorization = localStorage.getItem('token');
+    const userId = localStorage.getItem("user-id");
     return{
         type: 'FILTER_PRODUCT',
         payload: axios({
             method: 'GET',
-            url: `http://localhost:4500/product?name=${name}&category=${category}`
+            url: `http://localhost:4500/product?name=${name}&category=${category}`,
+            headers: {
+                "authorization": authorization,
+                "user-id": userId
+            }
         })
     }
 }
-
-// export const pagination = (page) =>{
-//     return{
-//         type: 'PAGINATION',
-//         payload: axios ({
-//         method: 'GET',
-//         url: `http://localhost:4500/product?page=${page}&limit=6`
-//     })
-// }
-// }

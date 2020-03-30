@@ -12,7 +12,7 @@ class NewModals extends Component{
             category: 0,
             price:'-',
             stock:'-',
-            image:''
+            image:'',   
         }
         
         onChangeImageHandler = (e)=>{
