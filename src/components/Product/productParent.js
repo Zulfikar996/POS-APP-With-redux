@@ -4,14 +4,15 @@ import { connect } from "react-redux";
 import { getProducts } from "../redux/actions/product";
 import { getCategory } from "../redux/actions/category";
 import NewModals from "./addModal";
-import EditModals from "./editModal";
-import DeleteModal from "./deleteModal";
 import NewNavbar from "../Layout/Navbar";
+import PurchaseModal from "./purchaseModal";
+import empty from "../image/empty-cart.png";
 import {
   addToCart,
   addQuantity,
   reduceQuantity,
-  deleteCart
+  deleteCart,
+  buy
 } from "../redux/actions/cart";
 
 class ProductParent extends Component {
@@ -20,6 +21,25 @@ class ProductParent extends Component {
     page: 1,
     limit: 6,
     onhidden: true
+  };
+
+  convertToRupiah = angka => {
+    var rupiah = "";
+    var angkarev = angka
+      .toString()
+      .split("")
+      .reverse()
+      .join("");
+    for (var i = 0; i < angkarev.length; i++)
+      if (i % 3 === 0) rupiah += angkarev.substr(i, 3) + ".";
+    return (
+      "Rp. " +
+      rupiah
+        .split("", rupiah.length - 1)
+        .reverse()
+        .join("") +
+      ",-"
+    );
   };
 
   onAddToCart = data => {
@@ -82,8 +102,52 @@ class ProductParent extends Component {
     this.props.dispatch(getProducts(page, this.state.limit));
   };
 
+  onSubmit = async () => {
+    const data = {
+      products: this.props.carts
+    };
+    await this.props.dispatch(buy(data));
+  };
+
   render() {
-    console.log(this.props.products);
+
+    const Checkout = () => {
+      if (carts.length !== 0) {
+        return (
+          <Row style={{ fontWeight: "bold" }}>
+            <Col sm={3} style={{ fontSize: "20px" }}>
+              Total:{" "}
+            </Col>
+            <Col sm={9} style={{ fontSize: "20px" }}>
+              {this.convertToRupiah(total)}
+            </Col>
+            <div
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                paddingLeft: "28%"
+              }}
+            >
+              <button
+                type="button"
+                className="btn btn-secondary"
+                style={{ width: 150 }}
+                data-toggle="modal"
+                data-target="#purchase"
+              >
+                Checkout
+              </button>
+            </div>
+          </Row>
+        );
+      } else {
+        return (
+          <Row style={{marginLeft: -140 }}>
+            <img src={empty} style={{width: 600}} />
+          </Row>
+        );
+      }
+    };
     const { products, categorys, carts, total, pages } = this.props;
     return (
       <div className="row">
@@ -92,8 +156,7 @@ class ProductParent extends Component {
           style={{ height: "100vh", overflowX: "hidden" }}
         >
           <NewNavbar categorys={categorys} onClick={this.onLogout.bind(this)} />
-          <EditModals idProduct={this.state.idProduct} categorys={categorys} />
-          <DeleteModal idProduct={this.state.idProduct} />
+          <PurchaseModal carts={carts} onClick={this.onSubmit.bind(this)} total={total} />
           <div className="row" style={{ paddingLeft: "50px" }}>
             {products.map(product => (
               <div
@@ -127,7 +190,7 @@ class ProductParent extends Component {
                           <b>{product.name}</b>
                         </h5>
                         <p className="card-text" style={{ marginTop: "-10px" }}>
-                          Rp. {product.price}{" "}
+                          {this.convertToRupiah(product.price)}{" "}
                         </p>
                       </div>
                     </div>
@@ -162,7 +225,7 @@ class ProductParent extends Component {
         <NewModals categorys={categorys} />
         <div
           className="cartbar col-md-3 bg-light"
-          style={{ height: "39.5rem", float: "right", overflowY: "scroll" }}
+          style={{ height: "39.5rem", float: "right", overflowY: "scroll", overflowX: "hidden" }}
         >
           <div
             style={{
@@ -185,7 +248,7 @@ class ProductParent extends Component {
               />
               <div class="media-body">
                 <h5 class="mt-0 mb-1">{cart.name}</h5>
-                Rp. {cart.price}
+                {this.convertToRupiah(cart.price)}
                 <button
                   type="button"
                   class="btn btn-outline-secondary"
@@ -216,22 +279,20 @@ class ProductParent extends Component {
                   +
                 </button>
                 <div>
-                  <button type="button" class="btn btn-outline-danger">
-                    Remove
-                  </button>
+                  <span
+                    style={{ border: "transparent", cursor: "pointer" }}
+                    onClick={() => this.deleteCart(cart.id)}
+                  >
+                    <i className="material-icons" style={{ color: "grey" }}>
+                      {" "}
+                      delete
+                    </i>
+                  </span>
                 </div>
               </div>
             </li>
           ))}
-          <Row style={{ fontWeight: "bold" }}>
-            <Col sm={4} style={{ fontSize: "25px" }}>
-              Total:{" "}
-            </Col>
-            <Col sm={8} style={{ fontSize: "25px" }}>
-              Rp. {total}
-            </Col>
-            <div>cekout</div>
-          </Row>
+          <Checkout />
         </div>
       </div>
     );

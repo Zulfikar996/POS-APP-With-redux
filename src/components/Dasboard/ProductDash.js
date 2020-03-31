@@ -11,7 +11,8 @@ import DeleteModal from '../Product/deleteModal'
 class ProductDash extends Component {
 
     state={
-        idProduct:''
+        idProduct:'',
+        limit: 999
     }
 
     onClickHandler = (e)=>{
@@ -20,9 +21,28 @@ class ProductDash extends Component {
             idProduct:e.target.value
         })
     }
+    
+    convertToRupiah = angka => {
+        var rupiah = '';
+        var angkarev = angka
+          .toString()
+          .split('')
+          .reverse()
+          .join('');
+        for (var i = 0; i < angkarev.length; i++)
+          if (i % 3 === 0) rupiah += angkarev.substr(i, 3) + ".";
+        return (
+          'Rp. ' +
+          rupiah
+            .split('', rupiah.length - 1)
+            .reverse()
+            .join('') +
+          ',-'
+        );
+      };
 
     getProducts = () =>{
-        this.props.dispatch(getProducts())
+        this.props.dispatch(getProducts(1, this.state.limit))
     }
 
     componentDidMount(){
@@ -73,7 +93,7 @@ class ProductDash extends Component {
                                 <td>{product.id}</td>
                                 <td>{product.name}</td>
                                 <td>{product.category}</td>
-                                <td>{product.price}</td>
+                                <td>{this.convertToRupiah(product.price)}</td>
                                 <td>{product.stock}</td>
                                 <td><Button onClick={this.onClickHandler} data-toggle="modal" data-target="#editModal" variant="danger" value={product.id} variant="warning">Edit</Button> - 
                                 <Button onClick={this.onClickHandler} data-toggle="modal" data-target="#deleteModal" variant="danger" value={product.id}>Delete</Button>

@@ -1,4 +1,4 @@
-
+import axios from 'axios'
 export const addToCart = (data) =>{
     return{
         type: 'ADD_CART',
@@ -25,4 +25,15 @@ export const deleteCart = (data) => {
         type: 'DELETE_CART',
         payload: data
     }
+}
+
+export const buy = (data) => {
+return{
+    type: 'BUY',
+    payload: axios({
+        method: 'POST',
+        url: "http://localhost:4500/purchase",
+        data:data
+    })
+}
 }
