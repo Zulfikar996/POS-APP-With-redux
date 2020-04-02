@@ -1,4 +1,6 @@
 import axios from 'axios'
+require('dotenv').config();
+
 export const addToCart = (data) =>{
     return{
         type: 'ADD_CART',
@@ -32,7 +34,7 @@ return{
     type: 'BUY',
     payload: axios({
         method: 'POST',
-        url: "http://localhost:4500/purchase",
+        url: `${process.env.REACT_APP_URL}/purchase`,
         data:data
     })
 }

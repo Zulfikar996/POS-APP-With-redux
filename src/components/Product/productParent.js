@@ -162,7 +162,7 @@ class ProductParent extends Component {
               <div
                 className="col-sm-4"
                 key={product.id}
-                style={{ backgroundColor: "#d9d9d9", padding: "25px" }}
+                style={{ backgroundColor: "#f5dca6", padding: "25px" }}
               >
                 <div
                   className="card"
@@ -229,7 +229,7 @@ class ProductParent extends Component {
         >
           <div
             style={{
-              backgroundColor: "#d9d9d9",
+              backgroundColor: "#f5dca6",
               height: "4rem",
               marginLeft: "-14px"
             }}

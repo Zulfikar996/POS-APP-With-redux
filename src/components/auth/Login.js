@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Background from "../image/1.jpg";
+import logo from './FamiRest.png'
+require('dotenv').config();
+
 
 class Login extends Component {
   constructor(props) {
@@ -26,7 +29,7 @@ class Login extends Component {
     e.preventDefault();
 
     axios
-      .post("http://localhost:4500/user/login", this.state)
+      .post(`${process.env.REACT_APP_URL}/user/login`, this.state)
       .then(res => {
         console.log(res.data);
         localStorage.setItem("token", res.data.token);
@@ -42,125 +45,69 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="row" style={{ width: "100%", height: "100vh" }}>
-        <img
-          className="loginBg"
-          src={Background}
-          style={{ position: "absolute", width: "100%", height: "100vh" }}
-        />
-        <div className="container">
-          <div className="row justify-content-md-center">
-            <div className="col-md-8" style={{ marginTop: "12%" }}>
-              <form
-                onSubmit={this.onSubmit}
-                style={{
-                  height: "260px",
-                  marginTop: "13%",
-                  backgroundColor: "#6f55258a"
-                }}
-              >
-                <div className="form-group">
-                  <center>
-                    <div
-                      class="input-group mb-3"
-                      style={{
-                        backgroundColor: "rgba(160, 108, 28, 0.79)",
-                        borderRadius: "15px",
-                        width: "500px"
-                      }}
-                    >
-                      <div class="input-group-prepend">
-                        <span
-                          class="input-group-text"
-                          id="basic-addon1"
-                          style={{
-                            backgroundColor: "transparent",
-                            border: "none"
-                          }}
-                        >
-                          <i
-                            className="material-icons"
-                            style={{ color: "grey" }}
-                          >
-                            {" "}
-                            person
-                          </i>
-                        </span>
-                      </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Enter email"
-                        aria-label="Username"
-                        name="email"
-                        onChange={this.onChange}
-                        aria-describedby="basic-addon1"
-                        style={{
-                          backgroundColor: "transparent",
-                          border: "none"
-                        }}
-                      />
-                    </div>
-                  </center>
+      <div className='row'>
+        <div className='col-lg-6' style={{ textAlign: 'left' }}>
+          <img
+            style={{
+              width: 1800,
+              height: '100vh',
+            }}
+            src={Background}
+            alt='login'
+          />
+        </div>
+
+        <div className='col-lg-6'>
+          <div
+            style={{
+              textAlign: 'center',
+              marginTop: '10px',
+              boxShadow: '-3px 3px 6px 3px #b28f4ca6',
+              backgroundColor: '#dfbc6c',
+              width: 500,
+              marginLeft: '30%',
+            }}
+          >
+            <img
+              style={{
+                width: 290,
+                height: 290,
+              }}
+              src={logo}
+              alt='Logo'
+            />
+
+            <div className='col-md-8 my-4'>
+              <form>
+                <div className='form-group' style={{ marginRight: '-50%' }}>
+                  <label>Email</label>
+                  <input
+                    type='email'
+                    className='form-control'
+                    placeholder='Enter email'
+                    name='email'
+                    onChange={this.onChange}
+                    required
+                  />
+
+                  <div className='form-group'>
+                    <label>Password</label>
+                    <input
+                      type='password'
+                      className='form-control'
+                      placeholder='Enter password'
+                      name='password'
+                      onChange={this.onChange}
+                    />
+                  </div>
+                  <button
+                    onClick={this.onSubmit}
+                    type='submit'
+                    className='btn login btn-primary'
+                  >
+                    Login
+                  </button>
                 </div>
-                <div className="form-group">
-                  <center>
-                    <div
-                      class="input-group mb-3"
-                      style={{
-                        backgroundColor: "rgba(160, 108, 28, 0.79)",
-                        borderRadius: "15px",
-                        width: "500px"
-                      }}
-                    >
-                      <div class="input-group-prepend">
-                        <span
-                          class="input-group-text"
-                          id="basic-addon1"
-                          style={{
-                            backgroundColor: "transparent",
-                            border: "none"
-                          }}
-                        >
-                          <i
-                            className="material-icons"
-                            style={{ color: "grey" }}
-                          >
-                            {" "}
-                            lock
-                          </i>
-                        </span>
-                      </div>
-                      <input
-                        type="password"
-                        class="form-control"
-                        placeholder="Enter Password"
-                        aria-label="Username"
-                        name="password"
-                        onChange={this.onChange}
-                        aria-describedby="basic-addon1"
-                        style={{
-                          backgroundColor: "transparent",
-                          border: "none"
-                        }}
-                      />
-                    </div>
-                  </center>
-                </div>
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  style={{
-                    marginLeft: "320px",
-                    position: "absolute",
-                    borderRadius: "15px",
-                    width: "80px",
-                    border: "none",
-                    backgroundColor: "rgba(160, 108, 28, 0.79)"
-                  }}
-                >
-                  Login
-                </button>
               </form>
             </div>
           </div>

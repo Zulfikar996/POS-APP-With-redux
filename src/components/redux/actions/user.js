@@ -1,4 +1,5 @@
 import axios from 'axios';
+require('dotenv').config();
 
 export const getUser = () => {
     // const authorization = localStorage.getItem('token');
@@ -7,7 +8,7 @@ export const getUser = () => {
         type: 'GET_USER',
         payload: axios({
             method: "GET",
-            url: "http://localhost:4500/user",
+            url: `${process.env.REACT_APP_URL}/user`,
             // headers: {
             //     "authorization": authorization,
             //     "user-id": userId

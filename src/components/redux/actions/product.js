@@ -1,4 +1,5 @@
 import axios from 'axios';
+require('dotenv').config();
 
 export const getProducts = (activepage, limit) => {
     const authorization = localStorage.getItem('token');
@@ -8,7 +9,7 @@ export const getProducts = (activepage, limit) => {
         type: 'GET_PRODUCT',
         payload: axios({
             method: "GET",
-            url: `http://localhost:4500/product?page=${page}&limit=${limit  }`,
+            url: `${process.env.REACT_APP_URL}/product?page=${page}&limit=${limit  }`,
             headers: {
                 "authorization": authorization,
                 "user-id": userId
@@ -23,7 +24,7 @@ export const addProduct = (data) => {
         payload: axios({
             method: 'POST',
             data:data,
-            url: "http://localhost:4500/product"
+            url: `${process.env.REACT_APP_URL}/product`
         })
     }
 }
@@ -34,7 +35,7 @@ export const editProduct = (data, propsId) => {
         payload: axios({
             method: 'PATCH',
             data:data,
-            url: `http://localhost:4500/product/${propsId}`
+            url: `${process.env.REACT_APP_URL}/product/${propsId}`
         })
     }
 }
@@ -44,7 +45,7 @@ export const deleteProduct = (propsId) => {
         type: 'DELETE_PRODUCT',
         payload: axios({
             method: 'DELETE',
-            url: `http://localhost:4500/product/${propsId}`
+            url: `${process.env.REACT_APP_URL}/product/${propsId}`
         })
     }
 }
@@ -56,7 +57,7 @@ export const filterProduct = (category, name) => {
         type: 'FILTER_PRODUCT',
         payload: axios({
             method: 'GET',
-            url: `http://localhost:4500/product?name=${name}&category=${category}`,
+            url: `${process.env.REACT_APP_URL}/product?name=${name}&category=${category}`,
             headers: {
                 "authorization": authorization,
                 "user-id": userId
