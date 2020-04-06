@@ -1,5 +1,4 @@
-![login](https://user-images.githubusercontent.com/60281216/78542740-d0c44900-7821-11ea-9a0e-2744cfd687c0.JPG)
-
+![Mint Beach Photo Collage Facebook Post](https://user-images.githubusercontent.com/60281216/78542928-15e87b00-7822-11ea-83b4-2646b86adbfa.png)
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
