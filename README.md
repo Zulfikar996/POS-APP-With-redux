@@ -27,7 +27,7 @@ FamiRest is a web application that can helps cashier to manage production such a
 	
 ## How To Run
 1. Open your terminal or command prompt
-2. Type `git clone https://github.com/GunturThunder/Pont-Of-Sale-App-Using-ReactJs-Redux.git`
+2. Type `git clone https://github.com/Zulfikar996/POS-APP-With-redux.git`
 3. Open the folder and type `npm install` for install dependencies
 	#### Setup .env
 		Open .env file on your favorite code editor, and copy paste this code below :
