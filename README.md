@@ -2,9 +2,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 <section id="home">
 	
-<h1 align="center">AsaUlu - Point Of Sales - Front-End</h1>
+<h1 align="center">FamiRest - Point Of Sales - Front-End</h1>
 
-AsaUlu is a web application that can helps cashier to manage production such as add product, edit product, delete product even order product
+FamiRest is a web application that can helps cashier to manage production such as add product, edit product, delete product even order product
 </section>
 
 #### Table Of Content
@@ -32,6 +32,6 @@ AsaUlu is a web application that can helps cashier to manage production such as 
 	#### Setup .env
 		Open .env file on your favorite code editor, and copy paste this code below :
 		```
-		REACT_APP_URL="http://20.20.20.147:4040/" <= Your Ip
+		REACT_APP_URL="http://{your ip}:{port}/"
 		```
 4. type `npm start` for run dependencies
